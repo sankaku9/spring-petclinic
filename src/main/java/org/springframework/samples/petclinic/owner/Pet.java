@@ -53,8 +53,11 @@ public class Pet extends NamedEntity {
 	@JoinColumn(name = "type_id")
 	private PetType type;
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinColumn(name = "pet_id")
+	@ManyToOne
+	@JoinColumn(name = "owner_id")
+	private Owner owner;
+
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "pet", fetch = FetchType.EAGER)
 	@OrderBy("date ASC")
 	private final Set<Visit> visits = new LinkedHashSet<>();
 
@@ -74,12 +77,21 @@ public class Pet extends NamedEntity {
 		this.type = type;
 	}
 
+	public Owner getOwner() {
+		return owner;
+	}
+
+	public void setOwner(Owner owner) {
+		this.owner = owner;
+	}
+
 	public Collection<Visit> getVisits() {
 		return this.visits;
 	}
 
 	public void addVisit(Visit visit) {
 		getVisits().add(visit);
+		visit.setPet(this);
 	}
 
 }

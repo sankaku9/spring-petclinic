@@ -40,7 +40,7 @@ CREATE TABLE IF NOT EXISTS pets (
   name VARCHAR(30),
   birth_date DATE,
   type_id INT(4) UNSIGNED NOT NULL,
-  owner_id INT(4) UNSIGNED,
+  owner_id INT(4) UNSIGNED NOT NULL,
   INDEX(name),
   FOREIGN KEY (owner_id) REFERENCES owners(id),
   FOREIGN KEY (type_id) REFERENCES types(id)
@@ -48,8 +48,21 @@ CREATE TABLE IF NOT EXISTS pets (
 
 CREATE TABLE IF NOT EXISTS visits (
   id INT(4) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  pet_id INT(4) UNSIGNED,
+  pet_id INT(4) UNSIGNED NOT NULL,
   visit_date DATE,
   description VARCHAR(255),
   FOREIGN KEY (pet_id) REFERENCES pets(id)
+) engine=InnoDB;
+
+CREATE TABLE IF NOT EXISTS users (
+  username VARCHAR(255) NOT NULL PRIMARY KEY,
+  password VARCHAR(255) NOT NULL,
+  enabled BOOLEAN NOT NULL
+) engine=InnoDB;
+
+CREATE TABLE IF NOT EXISTS authorities (
+  username VARCHAR(255) NOT NULL,
+  authority VARCHAR(255) NOT NULL,
+  FOREIGN KEY (username) REFERENCES users(username),
+  PRIMARY KEY (username, authority)
 ) engine=InnoDB;

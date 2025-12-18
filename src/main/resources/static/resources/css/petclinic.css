@@ -1,3 +1,13 @@
+/* Logout用: ドロップダウンのnav-link（Logout）に緑系hover背景を適用 */
+.dropdown-item.nav-link:hover, .dropdown-item.nav-link:focus {
+  background-color: #198754 !important; /* Bootstrapのbtn-successやnavbarのactive色に近い */
+  color: #fff !important;
+}
+/* ドロップダウン背景色のみ調整（Logout色はnav-linkに統一） */
+.dropdown-menu {
+  background-color: #30302D !important;
+}
+
 /*
  * Copyright 2016 the original author or authors.
  *

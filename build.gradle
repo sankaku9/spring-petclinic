@@ -32,6 +32,7 @@ ext.webjarsBootstrapVersion = "5.3.8"
 
 dependencies {
   implementation 'org.springframework.boot:spring-boot-starter-cache'
+  implementation 'org.springframework.boot:spring-boot-starter-security'
   implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
   implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
   implementation 'org.springframework.boot:spring-boot-starter-webmvc'
@@ -86,3 +87,8 @@ checkFormatAotTest.enabled = false
 
 formatAot.enabled = false
 formatAotTest.enabled = false
+
+// すべてのAOTタスクを無効化
+tasks.matching { it.name.contains("Aot") }.configureEach {
+  enabled = false
+}

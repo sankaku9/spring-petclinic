@@ -48,7 +48,10 @@ import org.springframework.http.ResponseEntity;
  */
 // NOT Waiting https://github.com/spring-projects/spring-boot/issues/5574
 @SpringBootTest(webEnvironment = RANDOM_PORT,
-		properties = { "spring.web.error.include-message=ALWAYS", "management.endpoints.access.default=none" })
+		properties = { "spring.web.error.include-message=ALWAYS", "management.endpoints.access.default=none" },
+		classes = { org.springframework.samples.petclinic.system.CrashController.class,
+				org.springframework.samples.petclinic.system.CrashControllerIntegrationTests.TestConfiguration.class,
+				org.springframework.samples.petclinic.system.CrashControllerIntegrationTests.TestSecurityConfig.class })
 @AutoConfigureTestRestTemplate
 class CrashControllerIntegrationTests {
 
@@ -95,6 +98,20 @@ class CrashControllerIntegrationTests {
 	@SpringBootApplication(exclude = { DataSourceAutoConfiguration.class,
 			DataSourceTransactionManagerAutoConfiguration.class, HibernateJpaAutoConfiguration.class })
 	static class TestConfiguration {
+
+	}
+
+	// 認証バイパス用のテスト用SecurityConfig
+	@org.springframework.boot.test.context.TestConfiguration
+	static class TestSecurityConfig {
+
+		@org.springframework.context.annotation.Bean(name = "securityFilterChain")
+		public org.springframework.security.web.SecurityFilterChain securityFilterChain(
+				org.springframework.security.config.annotation.web.builders.HttpSecurity http) throws Exception {
+			http.authorizeHttpRequests(authz -> authz.anyRequest().permitAll());
+			http.csrf(csrf -> csrf.disable());
+			return http.build();
+		}
 
 	}
 
