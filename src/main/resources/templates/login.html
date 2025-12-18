@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body},'home')}">
+
+<body>
+	<div class="container">
+		<div class="row justify-content-center">
+			<div class="col-md-6">
+				<h2 class="text-center mt-4 mb-4" th:text="#{login}">Login</h2>
+				<div class="text-center mb-4">
+					<img class="img-responsive" src="../static/resources/images/pets.png" th:src="@{/resources/images/pets.png}" style="max-width: 200px;" />
+				</div>
+				<div th:if="${param.error}" class="alert alert-danger text-center" th:text="#{login.invalid.username.password}">Invalid username and password.</div>
+				<div th:if="${param.logout}" class="alert alert-success text-center" th:text="#{login.logged.out}">You have been logged out.</div>
+				<form th:action="@{/login}" method="post" class="form-horizontal">
+					<input type="hidden" th:name="${_csrf?.parameterName}" th:value="${_csrf?.token}" />
+					<div class="form-group mb-3">
+						<label for="username" th:text="#{login.username}" class="form-label">Username</label>
+						<input type="text" id="username" name="username" class="form-control" />
+					</div>
+					<div class="form-group mb-4">
+						<label for="password" th:text="#{login.password}" class="form-label">Password</label>
+						<input type="password" id="password" name="password" class="form-control" />
+					</div>
+					<div class="d-grid">
+						<button type="submit" class="btn btn-primary btn-block" th:text="#{login.signin}">Sign In</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>
